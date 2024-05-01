@@ -4,7 +4,7 @@
 
 ## Description
 
-An app to store your links.
+An app to store your links. It can also act as a shortlink service.
 
 ## License
 
