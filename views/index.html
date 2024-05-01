@@ -31,6 +31,13 @@
     .dlg[open] {
         background-color: gray;
     }
+
+    .searchAndAdd {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
 </style>
 
 <dialog class=dlg id="addDlg">
@@ -40,9 +47,9 @@
     <h3>add a link</h3>
     <form action="/add" method="post">
         <label for="nick">nick:</label>
-        <input type="text" name="nick" id="nick" required>
+        <input type="text" name="nick" id="nick" required size="10">
         <label for="url">url:</label>
-        <input type="url" name="url" id="url" required>
+        <input type="url" name="url" id="url" required size="30">
         <button type="submit">add</button>
     </form>
 </dialog>
@@ -55,9 +62,9 @@
     <form action="/edit" method="post">
         <input type="hidden" name="id" id="editId" required>
         <label for="nick">nick:</label>
-        <input type="text" name="nick" id="editNick" required>
+        <input type="text" name="nick" id="editNick" required size="10">
         <label for="url">url:</label>
-        <input type="url" name="url" id="editUrl" required>
+        <input type="url" name="url" id="editUrl" required size="30">
         <button type="submit">save changes</button>
     </form>
 </dialog>
@@ -65,7 +72,12 @@
 <body>
     <h1>{{.Title}}</h1>
 
-    <button id="addBtn">add a link</button>
+    <div class="searchAndAdd">
+        <search>
+            <input type="search" id="srchBox" placeholder="search">
+        </search>
+        <button id="addBtn">add a link</button>
+    </div>
     <table class="center">
         <thead>
             <tr>
@@ -119,6 +131,23 @@
                 document.getElementById('editDlg').showModal();
             });
         }
+
+        document.getElementById('srchBox').addEventListener('input', function () {
+            var filter = this.value.toUpperCase();
+            var rows = document.querySelector('table').rows;
+            for (var i = 1; i < rows.length; i++) {
+                var cells = rows[i].cells;
+                var show = false;
+                for (var j = 0; j < cells.length - 1; j++) {
+                    var cell = cells[j].textContent.toUpperCase();
+                    if (cell.indexOf(filter) > -1) {
+                        show = true;
+                        break;
+                    }
+                }
+                rows[i].style.display = show ? '' : 'none';
+            }
+        });
     </script>
 </body>
 
