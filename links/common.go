@@ -7,7 +7,7 @@ import (
 )
 
 func Init() {
-	db, err := sql.Open("sqlite", "../../links.sqlite")
+	db, err := sql.Open("sqlite", "links.sqlite")
 	if err != nil {
 		panic(err)
 	}
@@ -19,7 +19,7 @@ func Init() {
 }
 
 func getDb() *sql.DB {
-	db, err := sql.Open("sqlite", "../../links.sqlite")
+	db, err := sql.Open("sqlite", "links.sqlite")
 	if err != nil {
 		panic(err)
 	}

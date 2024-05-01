@@ -10,7 +10,7 @@ import (
 
 func main() {
 	links.Init()
-	engine := html.New("../../views", ".html")
+	engine := html.New("views", ".html")
 	app := fiber.New(fiber.Config{Views: engine})
 
 	app.Get("/", listing.Index)
@@ -18,5 +18,5 @@ func main() {
 	app.Post("/edit", listing.Edit)
 	app.Get("/delete/:id", listing.Delete)
 
-	app.Listen("127.0.0.1:3000")
+	app.Listen(":3000")
 }
