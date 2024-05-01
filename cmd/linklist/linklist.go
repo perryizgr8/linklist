@@ -1,6 +1,7 @@
 package main
 
 import (
+	"linklist/follow"
 	"linklist/links"
 	"linklist/listing"
 
@@ -14,6 +15,8 @@ func main() {
 	app := fiber.New(fiber.Config{Views: engine})
 
 	app.Get("/", listing.Index)
+	app.Get("/:nick", follow.RedirectByNick)
+	app.Get("/id/:id", follow.RedirectById)
 	app.Post("/add", listing.Add)
 	app.Post("/edit", listing.Edit)
 	app.Get("/delete/:id", listing.Delete)

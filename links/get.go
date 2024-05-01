@@ -29,3 +29,33 @@ func Get() []structs.Link {
 
 	return links
 }
+
+func GetUrlByNick(nick string) (string, error) {
+	db := getDb()
+	defer db.Close()
+
+	row := db.QueryRow("SELECT url FROM links WHERE nick = ?", nick)
+
+	var url string
+	err := row.Scan(&url)
+	if err != nil {
+		return "", err
+	}
+
+	return url, nil
+}
+
+func GetUrlById(id string) (string, error) {
+	db := getDb()
+	defer db.Close()
+
+	row := db.QueryRow("SELECT url FROM links WHERE id = ?", id)
+
+	var url string
+	err := row.Scan(&url)
+	if err != nil {
+		return "", err
+	}
+
+	return url, nil
+}
