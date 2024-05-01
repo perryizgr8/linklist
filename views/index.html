@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        background-color: black;
+        color: white;
+    }
+
+    .center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    a {
+        color: white;
+    }
+
+    .container {
+        position: relative;
+    }
+
+    .xBtn {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .dlg[open] {
+        background-color: gray;
+    }
+</style>
+
+<dialog class=dlg id="addDlg">
+    <div class="container">
+        <button class="xBtn" id="xBtnAddDlg" autofocus>X</button>
+    </div>
+    <h3>add a link</h3>
+    <form action="/add" method="post">
+        <label for="nick">nick:</label>
+        <input type="text" name="nick" id="nick" required>
+        <label for="url">url:</label>
+        <input type="url" name="url" id="url" required>
+        <button type="submit">add</button>
+    </form>
+</dialog>
+
+<dialog class=dlg id="editDlg">
+    <div class="container">
+        <button class="xBtn" id="xBtnEditDlg" autofocus>X</button>
+    </div>
+    <h3>edit link</h3>
+    <form action="/edit" method="post">
+        <input type="hidden" name="id" id="editId" required>
+        <label for="nick">nick:</label>
+        <input type="text" name="nick" id="editNick" required>
+        <label for="url">url:</label>
+        <input type="url" name="url" id="editUrl" required>
+        <button type="submit">save changes</button>
+    </form>
+</dialog>
+
+<body>
+    <h1>{{.Title}}</h1>
+
+    <button id="addBtn">add a link</button>
+    <table class="center">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>nick</th>
+                <th>url</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .Links}}
+            <tr>
+                <td>{{.Id}}</td>
+                <td>{{.Nick}}</td>
+                <td><a href="{{.Url}}">{{.Url}}</a></td>
+                <td>
+                    {{if .Readonly}}
+                    <span><i>readonly</i></span>
+                    {{else}}
+                    <a class="editLink" href="/edit/{{.Id}}">edit</a>
+                    <a href="/delete/{{.Id}}">delete</a>
+                    {{end}}
+                </td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+
+    <script>
+        var xBtns = document.getElementsByClassName('xBtn');
+        for (var i = 0; i < xBtns.length; i++) {
+            xBtns[i].addEventListener('click', function () {
+                document.getElementById('addDlg').close();
+                document.getElementById('editDlg').close();
+            });
+        }
+        document.getElementById('addBtn').addEventListener('click', function () {
+            document.getElementById('addDlg').showModal();
+        });
+        var editLinks = document.getElementsByClassName('editLink');
+        for (var i = 0; i < editLinks.length; i++) {
+            editLinks[i].addEventListener('click', function (event) {
+                event.preventDefault();
+                var row = event.target.parentElement.parentElement;
+                var id = row.children[0].textContent;
+                var nick = row.children[1].textContent;
+                var url = row.children[2].textContent;
+                document.getElementById('editId').value = id;
+                document.getElementById('editNick').value = nick;
+                document.getElementById('editUrl').value = url;
+                document.getElementById('editDlg').showModal();
+            });
+        }
+    </script>
+</body>
+
+</html>
