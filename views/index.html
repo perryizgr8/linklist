@@ -96,7 +96,8 @@
             <tr>
                 <td>{{.Id}}</td>
                 <td>{{.Nick}}</td>
-                <td><a href="{{.Url}}">{{.Url}}</a></td>
+                <td style="white-space: nowrap; text-overflow:ellipsis; overflow: hidden; max-width:500px;"><a
+                        href="{{.Url}}">{{.Url}}</a></td>
                 <td>
                     {{if .Readonly}}
                     <span><i>readonly</i></span>
