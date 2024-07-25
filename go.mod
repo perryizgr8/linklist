@@ -3,7 +3,7 @@ module linklist
 go 1.22.0
 
 require (
-	github.com/gofiber/fiber/v2 v2.52.4
+	github.com/gofiber/fiber/v2 v2.52.5
 	github.com/gofiber/template/html/v2 v2.1.1
 	github.com/spf13/viper v1.18.2
 	modernc.org/sqlite v1.29.8
